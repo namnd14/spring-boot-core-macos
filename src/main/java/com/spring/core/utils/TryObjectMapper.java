@@ -1,6 +1,7 @@
 package com.spring.core.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.core.dto.request.DemoForObjectMapper;
 
@@ -19,7 +20,7 @@ public class TryObjectMapper {
             String response = objectMapper.writeValueAsString(data);
             System.out.println(response);
 
-            Map<String, String> data2 = objectMapper.readValue(response, Map.class);
+            Map<String, String> data2 = objectMapper.readValue(response, new TypeReference<Map<String, String>>() {});
             System.out.println(data2);
 
             // with POJO
