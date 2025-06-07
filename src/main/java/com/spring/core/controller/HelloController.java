@@ -1,8 +1,11 @@
 package com.spring.core.controller;
 
+import com.spring.core.service.MessageService;
 import com.spring.core.service.RedisServiceExample;
 import com.spring.core.utils.Java8;
 import com.spring.core.utils.TextBlocks;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,17 +13,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     private final RedisServiceExample redisServiceExample;
 
-    public HelloController(RedisServiceExample redisServiceExample) {
+    private final MessageService messageService;
+
+    public HelloController(RedisServiceExample redisServiceExample, MessageService messageService) {
         this.redisServiceExample = redisServiceExample;
+        this.messageService = messageService;
     }
 
     @GetMapping("/hello")
     public String sayHello() {
+        testMessageSource();
+        return "Hello World";
+    }
+
+    private void testMessageSource() {
+        String message = messageService.getMessage("welcome");
+        System.out.println(message);
+    }
+
+    private void testJava8() {
         Java8 java8 = new Java8();
         java8.log();
+    }
+
+    private void testTextBlocks() {
         TextBlocks textBlocks = new TextBlocks();
         textBlocks.log();
-        return "Hello World";
     }
 
     @GetMapping("/redis")
